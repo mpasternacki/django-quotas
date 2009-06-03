@@ -1,0 +1,52 @@
+This Django application adds support for numerical quotas based on
+django.contrib.auth users, groups and permissions.
+
+Quotas are configured with QUOTAS setting, which should be
+a dictionary where keys are quota parameter name, and values are tuple
+of limit values.  Application creates specific permissions based on
+this specification.  For exaplne, setting:
+
+    QUOTAS = {
+        "user_number" : (1, 5, 20),
+        "file_space" : (5, 10),
+        }
+
+would result in creating permissions: quotas.quota_user_number_1,
+quotas.quota_user_number_5, quotas.quota_user_number_20,
+quotas.quota_user_number_unlimited, quota.file_space_5,
+quota.file_space_10. quota.file_space_unlimited.
+
+Assigning specific quotas to users means assigning them (or their
+groups) one of those permissions.  For convenience,
+django.auth.models.User.get_quota(name) method is added, which
+returns:
+ - None if User instance does not have any of quota permissions for
+   name assigned,
+ - value if User instance has some specific quota permission assigned,
+ - and True if User instance has unlimited quota permission assigned.
+If User instance has several quota permissions assigned, highes quota
+is returned.
+
+
+Application is available on terms of the MIT license:
+
+Copyright (c) 2009 Maciej Pasternacki <maciej@pasternacki.net>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
