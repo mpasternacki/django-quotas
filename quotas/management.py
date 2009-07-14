@@ -19,13 +19,13 @@ def ensure_permissions(app, verbosity=0, **kwargs):
             p, created = Permission.objects.get_or_create(
                 codename='quota_%s_%d' % (base, i),
                 content_type__pk = ct.id,
-                defaults={'name': '%s quota of %d' % (base, i),
+                defaults={'name': '%d %s' % (i, base),
                          'content_type': ct})
             if created and verbosity>=1: print 'Added permission %s' % p
         p, created = Permission.objects.get_or_create(
             codename='quota_%s_unlimited' % base,
             content_type__pk = ct.id,
-            defaults={'name': '%s unlimited quota' % base,
+            defaults={'name': 'unlimited %s' % base,
                      'content_type': ct})
         if created and verbosity>=1: print 'Added permission %s' % p
     
