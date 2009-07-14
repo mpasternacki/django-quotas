@@ -18,14 +18,14 @@ quota.file_space_10. quota.file_space_unlimited.
 
 Assigning specific quotas to users means assigning them (or their
 groups) one of those permissions.  For convenience,
-django.auth.models.User.get_quota(name) method is added, which
-returns:
- - None if User instance does not have any of quota permissions for
-   name assigned,
- - value if User instance has some specific quota permission assigned,
- - and True if User instance has unlimited quota permission assigned.
-If User instance has several quota permissions assigned, highes quota
-is returned.
+django.auth.models.User.quotas property is added.  Its attributes
+reflect quota values for user, e.g. if user `u' has
+`quotas.quota_user_number_5' permission, `u.quotas.user_number' equals
+5.  If user has no permission asigned for the quota, attribute value
+is `None'.  If user has unlimited quota, attribute value is
+`quotas.INFINITY' sentinel, which is `float("infinity")' and is
+usable in numerical comparisons.  If User instance has several quota
+permissions assigned, attribute value reflects the highes quota.
 
 
 Application is available on terms of the MIT license:
