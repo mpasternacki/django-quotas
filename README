@@ -23,9 +23,10 @@ reflect quota values for user, e.g. if user `u' has
 `quotas.quota_user_number_5' permission, `u.quotas.user_number' equals
 5.  If user has no permission asigned for the quota, attribute value
 is `None'.  If user has unlimited quota, attribute value is
-`quotas.INFINITY' sentinel, which is `float("infinity")' and is
-usable in numerical comparisons.  If User instance has several quota
-permissions assigned, attribute value reflects the highes quota.
+`quotas.UNLIMITED' sentinel, which is instance of quotas.Unlimited
+class that is greater than any value, and it string representation is
+'unlimited'.  If User instance has several quota permissions assigned,
+attribute value reflects the highes quota.
 
 
 Application is available on terms of the MIT license:

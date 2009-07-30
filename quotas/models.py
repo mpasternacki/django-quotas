@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 
-from quotas import INFINITY
+from quotas import UNLIMITED
 
 QUOTAS = getattr(settings, 'QUOTAS', {})
 
@@ -12,7 +12,7 @@ def _user_get_quota(user, base):
     Returns True if unlimited, integer if limited, None if no quota was set."""
     def __has_quota_of(limit):
         return user.has_perm( 'quotas.quota_%s_%s'%(base, limit) )
-    if __has_quota_of('unlimited'): return INFINITY
+    if __has_quota_of('unlimited'): return UNLIMITED
     try:
         for v in sorted( QUOTAS[base], reverse=True ):
             if __has_quota_of(v):
